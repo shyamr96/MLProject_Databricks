@@ -1,0 +1,7 @@
+data:
+	train_path: /dbfs/FileStore/data/train.csv
+	predict_path: /dbfs/FileStore/data/new_data.csv
+	output_path: /dbfs/FileStore/data/predictions.csv
+
+model:
+	target_column: sales
