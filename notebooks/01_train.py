@@ -7,7 +7,7 @@ from src.models.train import train_model
 config = load_config()
 
 # COMMAND ----------
-df = load_data(config["data"]["train_path"])
+df = load_data(table_name=config["data"]["train_table"], spark=spark)
 
 # COMMAND ----------
 model = train_model(df, config["model"]["target_column"])

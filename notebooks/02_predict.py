@@ -6,7 +6,12 @@ from src.models.predict import predict
 config = load_config()
 
 # COMMAND ----------
-predict(
-	data_path=config["data"]["predict_path"],
-	output_path=config["data"]["output_path"]
+predictions_df = predict(
+	data_table=config["data"]["predict_table"],
+	spark=spark
+)
+
+# COMMAND ----------
+spark.createDataFrame(predictions_df).write.mode("overwrite").saveAsTable(
+	config["data"]["output_table"]
 )

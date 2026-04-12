@@ -4,7 +4,7 @@ import joblib
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
-MODEL_PATH = "/dbfs/FileStore/model/model.pkl"
+MODEL_PATH = "/tmp/mlops_model/model.pkl"
 
 
 def train_model(df, target):
@@ -16,7 +16,7 @@ def train_model(df, target):
 	model = LinearRegression()
 	model.fit(X_train, y_train)
 
-	os.makedirs("/dbfs/FileStore/model", exist_ok=True)
+	os.makedirs("/tmp/mlops_model", exist_ok=True)
 	joblib.dump(model, MODEL_PATH)
 
 	return model
