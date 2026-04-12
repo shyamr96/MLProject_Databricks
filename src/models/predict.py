@@ -8,8 +8,9 @@ def load_model():
 	return joblib.load(MODEL_PATH)
 
 
-def predict(data_path=None, output_path=None, data_table=None, spark=None):
-	model = load_model()
+def predict(data_path=None, output_path=None, data_table=None, spark=None, model=None):
+	if model is None:
+		model = load_model()
 
 	if data_table:
 		if spark is None:

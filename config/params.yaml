@@ -4,4 +4,5 @@ data:
   output_table: "workspace.practice_schema.predictions"
 
 model:
+  model_table: "workspace.practice_schema.sales_model_artifact"
   target_column: sales

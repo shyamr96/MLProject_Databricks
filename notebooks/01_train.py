@@ -1,4 +1,6 @@
 # COMMAND ----------
+import pickle
+
 from src.utils.config import load_config
 from src.data.ingestion import load_data
 from src.models.train import train_model
@@ -15,3 +17,9 @@ df = load_data(table_name=config["data"]["train_table"], spark=spark)
 
 # COMMAND ----------
 model = train_model(df, config["model"]["target_column"])
+
+# COMMAND ----------
+model_blob = pickle.dumps(model)
+spark.createDataFrame([(model_blob,)], ["model_blob"]).write.mode("overwrite").saveAsTable(
+	config["model"]["model_table"]
+)
