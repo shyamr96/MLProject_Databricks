@@ -2,6 +2,10 @@
 from src.utils.config import load_config
 from src.models.predict import predict
 
+spark = globals().get("spark")
+if spark is None:
+	raise RuntimeError("Spark session is not available. Run this notebook in Databricks.")
+
 # COMMAND ----------
 config = load_config()
 

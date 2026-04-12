@@ -3,6 +3,10 @@ from src.utils.config import load_config
 from src.data.ingestion import load_data
 from src.models.train import train_model
 
+spark = globals().get("spark")
+if spark is None:
+	raise RuntimeError("Spark session is not available. Run this notebook in Databricks.")
+
 # COMMAND ----------
 config = load_config()
 

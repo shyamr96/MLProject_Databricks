@@ -1,7 +1,7 @@
 data:
-	train_table: "workspace.practice_schema.`train.csv`"
-	predict_table: "workspace.practice_schema.`new_data.csv`"
-	output_table: "workspace.practice_schema.`predictions.csv`"
+  train_table: "workspace.practice_schema.`train.csv`"
+  predict_table: "workspace.practice_schema.`new_data.csv`"
+  output_table: "workspace.practice_schema.`predictions.csv`"
 
 model:
-	target_column: sales
+  target_column: sales
