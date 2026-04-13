@@ -18,6 +18,14 @@ if model_row is None:
 
 model = pickle.loads(model_row["model_blob"])
 
+print("=" * 60)
+print("MODEL LOADED SUCCESSFULLY")
+print("=" * 60)
+print(f"Model Type: {type(model).__name__}")
+print(f"Model Coefficients: {model.coef_}")
+print(f"Model Intercept: {model.intercept_}")
+print("=" * 60)
+
 # COMMAND ----------
 predictions_df = predict(
 	data_table=config["data"]["predict_table"],
@@ -25,7 +33,18 @@ predictions_df = predict(
 	model=model
 )
 
+# Print predictions
+print("\n" + "=" * 60)
+print("PREDICTIONS GENERATED")
+print("=" * 60)
+print(f"Number of predictions: {len(predictions_df)}")
+print("\nFinal Predictions (showing all rows):")
+print(predictions_df.to_string())
+print("=" * 60)
+
 # COMMAND ----------
 spark.createDataFrame(predictions_df).write.mode("overwrite").saveAsTable(
 	config["data"]["output_table"]
 )
+
+print(f"\n✓ Predictions saved successfully to: {config['data']['output_table']}")
