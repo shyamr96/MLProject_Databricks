@@ -1,0 +1,44 @@
+name: ML Prediction Pipeline
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install pytest
+      
+      - name: Run tests
+        run: pytest tests/ -v
+      
+      - name: Install Databricks CLI
+        run: pip install databricks-cli
+      
+      - name: Sync to Databricks Repos
+        run: |
+          databricks repos update \
+            --path /Repos/${{ secrets.DATABRICKS_USER }}/MLProject_Databricks \
+            --branch main
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+      
+      - name: Run Prediction Job
+        run: |
+          databricks jobs run-now --job-id 623469599221539
+        env:
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}

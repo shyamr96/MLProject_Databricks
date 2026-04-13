@@ -1,4 +1,5 @@
 # COMMAND ----------
+# Prediction Pipeline - Automated via CI/CD
 import pickle
 
 from src.utils.config import load_config
@@ -40,6 +41,9 @@ print("=" * 60)
 print(f"Number of predictions: {len(predictions_df)}")
 print("\nFinal Predictions (showing all rows):")
 print(predictions_df.to_string())
+print('added to test feature branch')
+
+##move this to feature branch
 print("=" * 60)
 
 # COMMAND ----------
@@ -48,7 +52,3 @@ spark.createDataFrame(predictions_df).write.mode("overwrite").saveAsTable(
 )
 
 print(f"\n✓ Predictions saved successfully to: {config['data']['output_table']}")
-
-print('added to test feature branch')
-
-##move this to feature branch
