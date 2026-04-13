@@ -48,3 +48,5 @@ spark.createDataFrame(predictions_df).write.mode("overwrite").saveAsTable(
 )
 
 print(f"\n✓ Predictions saved successfully to: {config['data']['output_table']}")
+
+print('added to test feature branch')
