@@ -22,7 +22,9 @@ jobs:
           pip install pytest
       
       - name: Run tests
-        run: pytest tests/ -v
+        run: |
+          export PYTHONPATH=$PYTHONPATH:$(pwd)
+          pytest tests/ -v
       
       - name: Install Databricks CLI
         run: pip install databricks-cli
