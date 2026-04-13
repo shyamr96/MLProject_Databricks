@@ -37,7 +37,14 @@ predictions_df = predict(
 
 # Add IST timestamp column (UTC + 5:30)
 ist_timestamp = datetime.utcnow() + timedelta(hours=5, minutes=30)
+dbutils_instance = globals().get("dbutils")
+if dbutils_instance is not None:
+	who_executed = dbutils_instance.notebook.entry_point.getDbutils().notebook().getContext().userName().get()
+else:
+	who_executed = spark.sql("SELECT current_user() AS user_email").first()["user_email"]
+
 predictions_df['prediction_timestamp'] = ist_timestamp
+predictions_df['who_executed'] = who_executed
 
 # Print predictions
 print("\n" + "=" * 60)
@@ -45,6 +52,7 @@ print("PREDICTIONS GENERATED")
 print("=" * 60)
 print(f"Number of predictions: {len(predictions_df)}")
 print(f"Timestamp (IST): {ist_timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+print(f"Executed By: {who_executed}")
 print("\nFinal Predictions (showing all rows):")
 print(predictions_df.to_string())
 print("=" * 60)
@@ -56,6 +64,7 @@ spark.createDataFrame(predictions_df).write.mode("overwrite").option("overwriteS
 
 print(f"\n✓ Predictions saved successfully to: {config['data']['output_table']}")
 print(f"✓ Timestamp (IST): {ist_timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
+print(f"✓ Executed By: {who_executed}")
 print('job will save results to catlog')
 print('change in vscode to see if databricks job runs')
 
