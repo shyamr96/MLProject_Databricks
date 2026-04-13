@@ -57,3 +57,5 @@ spark.createDataFrame(predictions_df).write.mode("overwrite").option("overwriteS
 print(f"\n✓ Predictions saved successfully to: {config['data']['output_table']}")
 print(f"✓ Timestamp (IST): {ist_timestamp.strftime('%Y-%m-%d %H:%M:%S')}")
 print('job will save results to catlog')
+print('change in vscode to see if databricks job runs')
+
