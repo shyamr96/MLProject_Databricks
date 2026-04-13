@@ -19,6 +19,7 @@ df = load_data(table_name=config["data"]["train_table"], spark=spark)
 model = train_model(df, config["model"]["target_column"])
 
 # Print model information
+print('Testing CI/CD Pipeline - Version 1')
 print("=" * 60)
 print("MODEL TRAINING COMPLETED")
 print("=" * 60)
