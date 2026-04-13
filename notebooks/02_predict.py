@@ -1,6 +1,8 @@
 # COMMAND ----------
 # Prediction Pipeline - Automated via CI/CD
 import pickle
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from src.utils.config import load_config
 from src.models.predict import predict
@@ -34,16 +36,18 @@ predictions_df = predict(
 	model=model
 )
 
+# Add IST timestamp column
+ist_timestamp = datetime.now(ZoneInfo("Asia/Kolkata"))
+predictions_df['prediction_timestamp'] = ist_timestamp
+
 # Print predictions
 print("\n" + "=" * 60)
 print("PREDICTIONS GENERATED")
 print("=" * 60)
 print(f"Number of predictions: {len(predictions_df)}")
+print(f"Timestamp (IST): {ist_timestamp.strftime('%Y-%m-%d %H:%M:%S %Z')}")
 print("\nFinal Predictions (showing all rows):")
 print(predictions_df.to_string())
-print('added to test feature branch')
-
-##move this to feature branch
 print("=" * 60)
 
 # COMMAND ----------
@@ -52,3 +56,4 @@ spark.createDataFrame(predictions_df).write.mode("overwrite").saveAsTable(
 )
 
 print(f"\n✓ Predictions saved successfully to: {config['data']['output_table']}")
+print(f"✓ Timestamp: {ist_timestamp.strftime('%Y-%m-%d %H:%M:%S %Z')}")
